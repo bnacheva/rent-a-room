@@ -6,7 +6,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name = "rooms")
+@FeignClient(name = "rent-service")
 public interface RoomClient {
 
     @GetMapping("/rooms")

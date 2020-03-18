@@ -10,6 +10,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -23,11 +24,11 @@ public class UserService {
         return userRepository.findAll().switchIfEmpty(Flux.empty());
     }
 
-    public Mono<User> getById(final Long id) {
+    public Mono<User> getById(final UUID id) {
         return userRepository.findById(id);
     }
 
-    public Mono update(final Long id, final User user) {
+    public Mono update(final UUID id, final User user) {
         return userRepository.save(user);
     }
 
@@ -35,7 +36,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Mono delete(final Long id) {
+    public Mono delete(final UUID id) {
         final Mono<User> dbUser = getById(id);
         if (Objects.isNull(dbUser)) {
             return Mono.empty();

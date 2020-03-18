@@ -1,7 +1,9 @@
 package com.rentservice.rentservice.repository;
 
 import com.rentservice.rentservice.model.Room;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
-public interface RentRepository extends JpaRepository<Room, Long> {
+import java.util.UUID;
+
+public interface RentRepository extends ReactiveMongoRepository<Room, UUID> {
 }

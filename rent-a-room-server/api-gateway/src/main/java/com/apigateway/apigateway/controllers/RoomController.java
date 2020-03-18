@@ -3,6 +3,7 @@ package com.apigateway.apigateway.controllers;
 import com.apigateway.apigateway.model.Room;
 import com.apigateway.apigateway.service.RoomClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class RoomController {
         return new ArrayList<>();
     }
 
-    @GetMapping("/available-rooms")
+    @GetMapping(value = "/available-rooms", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @HystrixCommand(fallbackMethod = "fallback")
     public Collection<Room> availableRooms() {

@@ -3,25 +3,26 @@ package com.userservice.userservice.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Document
 @ToString
 public class User {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    private UUID id;
 
     @NotNull
     private String username;
@@ -44,11 +45,11 @@ public class User {
     @Size(min = 6, max = 30)
     private String passwordRepeat;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
