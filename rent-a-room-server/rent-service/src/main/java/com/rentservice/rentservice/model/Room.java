@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -27,6 +27,16 @@ public class Room {
 
     @NotNull
     private String description;
+
+    @DecimalMin("0.0")
+    private Double price;
+
+    public Room(UUID id, String name, String type, String description) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.description = description;
+    }
 
 
     public UUID getId() {
@@ -59,5 +69,13 @@ public class Room {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
