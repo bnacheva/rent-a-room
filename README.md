@@ -1,2 +1,2 @@
 # rent-a-room
-rent-a-room-application-sofia
+rent-a-room-application-sofia :house:
