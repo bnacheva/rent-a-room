@@ -1,7 +1,8 @@
 package com.rentservice.rentservice.controllers;
 
 import com.rentservice.rentservice.model.Room;
-import com.rentservice.rentservice.repository.RentRepository;
+import com.rentservice.rentservice.service.RentService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,31 +12,39 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("rooms")
+@AllArgsConstructor
 public class RentController {
 
-    private RentRepository rentRepository;
+    private final RentService rentService;
 
-    public RentController(RentRepository rentRepository) {
-        this.rentRepository = rentRepository;
+    public RentController(RentService rentService) {
+        this.rentService = rentService;
     }
 
-    @PostMapping("/rooms")
+    @GetMapping
+    public Flux<Room> getAll() {
+        return rentService.getAll();
+    }
+
+    @GetMapping("{id}")
+    public Mono getRoom(@PathVariable("id") final UUID id) {
+        return rentService.getById(id);
+    }
+
+    @PutMapping("{id}")
+    public Mono updateRoom(@PathVariable("id") final UUID id, @RequestBody final Room room) {
+        return rentService.update(id, room);
+    }
+
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Room> addRoom(@RequestBody Room room) {
-        return rentRepository.save(room);
+    public Mono<Room> addRoom(@RequestBody final Room room) {
+        return rentService.save(room);
     }
 
-    @GetMapping("/rooms")
-    public Flux<Room> getRoom() {
-        return rentRepository.findAll();
-    }
-
-    @DeleteMapping("/rooms/{id}")
+    @DeleteMapping("{id}")
     public Mono<ResponseEntity<Void>> deleteRoom(@PathVariable("id") UUID id) {
-        return rentRepository.findById(id)
-                .flatMap(car -> rentRepository.delete(car)
-                        .then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK)))
-                )
-                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return rentService.delete(id);
     }
 }

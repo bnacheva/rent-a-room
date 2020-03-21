@@ -3,7 +3,6 @@ package com.userservice.userservice.service;
 import com.userservice.userservice.model.User;
 import com.userservice.userservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -17,7 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
 
     public Flux<User> getAll() {
